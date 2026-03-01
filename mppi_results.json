@@ -1,0 +1,20 @@
+{
+  "method": "MPPI with GNN World Model (ModelD)",
+  "n_nodes": 256,
+  "n_tets": 735,
+  "n_boundary": 148,
+  "n_tool_nodes": 8,
+  "n_steps": 50,
+  "K": 512,
+  "H": 8,
+  "lambda": 0.005,
+  "sigma": 0.002,
+  "target_dz_mm": 5.0,
+  "achieved_dz_mm": 5.017,
+  "final_goal_err_mm": 6.8762,
+  "achievement_pct": 100.34,
+  "elapsed_s": 95.54,
+  "gnn_train_loss": 1.2e-07,
+  "gnn_params": 125059,
+  "device": "cuda"
+}
