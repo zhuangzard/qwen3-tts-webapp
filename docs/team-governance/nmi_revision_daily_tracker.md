@@ -19,8 +19,15 @@
 - Started Expert Council review line (algorithm / baselines / failure / positioning / week plan)
 
 ### In progress
-- Batch A: `run_diffppo_v12b.sh` (3 seeds in parallel)
-- Expert Council written outputs pending
+- Batch A: `run_diffppo_v12b.sh` (3 seeds in parallel) — completed; treated as reconnaissance, not final evidence
+- Batch B: parallel ablation launch on 铁蛋儿
+  - `ablation_no_pgas_seed1.py`
+  - `ablation_no_pgas_seed2.py`
+  - `ablation_no_pgas_seed3.py`
+  - `ablation_no_nearfield_seed1.py`
+  - `ablation_no_nearfield_seed2.py`
+  - `ablation_no_nearfield_seed3.py`
+- Expert Council first-round outputs delivered; GPT-5.4 synthesis pending
 
 ### Artifacts / Logs
 - Local plan: `docs/team-governance/tiedan_run_plan_2026-03-08.md`
@@ -37,12 +44,14 @@
 - Current approach may not be globally optimal; requires Expert Council judgment
 - Baseline coverage still incomplete (SAC / TD3 / stronger fairness matrix not yet run)
 - Current RL code/result pipeline is not yet paper-grade; current runs are reconnaissance until they pass the new robustness gate
+- Early signal from Batch B: removing PGAS causes very large gradient norms (already >4k by ep90 on seed1), suggesting severe stabilization dependence
 
 ### Next queue
-1. Monitor Batch A to stable checkpoint / completion
-2. Freeze Batch B (StdPPO baseline) launch plan
-3. Collect Expert Council outputs
-4. Update manuscript claim strategy based on expert review
+1. Fix the ablation final-print KeyError so outputs become pipeline-clean
+2. Turn tonight's ablation logs into a structured summary table
+3. Launch next route comparison batch (StdPPO + DPC-GNN, then stronger baselines as feasible)
+4. Produce GPT-5.4 synthesis memo from expert council reports
+5. Continue route comparison toward a hard conclusion on the best control paradigm for DPC-GNN
 
 ### End-of-day commit
 - Commit hash: `c5a5fda`
