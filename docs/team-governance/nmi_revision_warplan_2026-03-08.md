@@ -17,6 +17,7 @@ Primary objective:
 2. Rebuild the evidence chain with fair baselines, multi-seed statistics, and matched metrics.
 3. Make the paper reproducible enough that a hostile reviewer has fewer attack surfaces.
 4. Force all sub-agents to work under a strict QC pipeline.
+5. Upgrade the RL codebase itself to paper-grade robustness; one-off experiment scripts are not sufficient evidence.
 
 ---
 

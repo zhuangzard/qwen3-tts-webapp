@@ -36,6 +36,7 @@
 - GPT-5.4 subagent route unstable for orchestration; Sonnet supervisor route preferred
 - Current approach may not be globally optimal; requires Expert Council judgment
 - Baseline coverage still incomplete (SAC / TD3 / stronger fairness matrix not yet run)
+- Current RL code/result pipeline is not yet paper-grade; current runs are reconnaissance until they pass the new robustness gate
 
 ### Next queue
 1. Monitor Batch A to stable checkpoint / completion
