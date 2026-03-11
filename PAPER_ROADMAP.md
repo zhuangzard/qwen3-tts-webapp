@@ -1,6 +1,6 @@
 # 论文路线图 (Paper Roadmap)
 
-> 最后更新: 2026-03-11 14:12 EDT
+> 最后更新: 2026-03-11 14:15 EDT
 
 ---
 
@@ -22,9 +22,9 @@
 
 ---
 
-## 🔜 下一篇论文
+## 🔜 后续论文
 
-### Paper 2: SPH-GNN 心脑血管预测（规划中）
+### Paper 2: SPH-GNN 心脑血管预测
 - **建议标题**: "SPH-GNN: Data-Free Physics-Constrained Graph Neural Network for Cardiovascular Hemodynamics Prediction"
 - **目标期刊**: Nature Biomedical Engineering / MICCAI
 - **核心贡献**:
@@ -42,16 +42,39 @@
   - [ ] 临床数据获取（4D Flow MRI）
   - [ ] 论文初稿
 
-### Paper 3: 骨物理力学仿真（规划中）
+### Paper 3: 多组织耦合仿真
+- **建议标题**: "Unified Multi-Tissue Surgical Simulation via Physics-Constrained Graph Neural Networks"
+- **目标期刊**: Nature Machine Intelligence / Science Robotics
+- **核心贡献**:
+  - 首个纯物理驱动的多组织联调 GNN 手术仿真框架
+  - 共享权重 + 材料参数条件化：一个 GNN 同时仿真多种组织
+  - 界面力学：组织间接触/连续/固定界面的统一处理
+  - 零样本组合：训练时见过的单组织可自由组合成未见过的多组织场景
+- **临床场景**:
+  - 肝切除术：肝实质 + 门静脉 + 肝静脉 + 血液 + 器械
+  - 膝关节镜：股骨(骨) + 关节软骨 + 半月板 + 滑液
+  - 心脏手术：心肌 + 冠状动脉 + 血液 + 心包
+- **技术基础**: Paper 1 提供单组织验证，Paper 2 提供 FSI 能力
+- **TODO**:
+  - [ ] 多组织耦合架构设计（统一图 / 分组织图+耦合层 / 条件化）
+  - [ ] 界面力学实现（接触检测 + 力传递 + 损失分配）
+  - [ ] 训练策略（预训练→微调 / 课程学习）
+  - [ ] 肝切除术完整场景验证
+  - [ ] 膝关节镜完整场景验证
+  - [ ] 心脏手术完整场景验证
+  - [ ] 与 SOFA Framework / FEBio 对比
+  - [ ] 论文初稿
+
+### Paper 4: 骨物理力学仿真
 - **建议标题**: "AntiSym-SE3-GNN: SE(3)-Equivariant Physics-Constrained Graph Neural Network for Anisotropic Bone Mechanics"
-- **目标期刊**: Nature Machine Intelligence / JMPS (Journal of the Mechanics and Physics of Solids)
+- **目标期刊**: Nature Machine Intelligence / JMPS
 - **核心贡献**:
   - SE(3) 等变消息传递 + 牛顿第三定律反对称约束的统一理论
   - 正交各向异性本构（9独立常数）的纯物理驱动学习
   - 从皮质骨(17 GPa)到松质骨(0.1-5 GPa)的跨尺度验证
   - Fabric tensor 驱动的微观→宏观各向异性预测
 - **临床方向**: 骨折固定应力分析、脊柱融合术、关节置换应力屏蔽
-- **技术基础**: Level 1-2 代码在 MedIA revision 中完成，Level 3 = SE(3)等变MP全新实现
+- **技术基础**: Level 1-2 代码在 MedIA 中完成，Level 3 = SE(3)等变MP全新实现
 - **TODO**:
   - [ ] Level 1 横观各向同性验证（MedIA中完成）
   - [ ] Level 2 正交各向异性验证（MedIA中完成）
@@ -65,13 +88,20 @@
 
 ## 📊 论文矩阵总览
 
-| # | 论文 | 刚度范围 | 物态 | 本构模型 | 期刊 | 状态 |
+| # | 论文 | 刚度范围 | 物态 | 关键创新 | 期刊 | 状态 |
 |---|------|---------|------|---------|------|------|
-| 1 | DPC-GNN MedIA | 1 kPa → 500 kPa | 固/管/流 | Neo-Hookean + TI | MedIA | 🔄 Revision |
-| 2 | SPH-GNN 心脑血管 | 流体 | 血液 | SPH N-S + Carreau-Yasuda | Nature BME | 📋 规划 |
-| 3 | AntiSym-SE3 骨力学 | 0.1 → 17 GPa | 骨 | 正交各向异性 + SE(3) | NMI/JMPS | 📋 规划 |
+| 1 | DPC-GNN MedIA | 1kPa→500kPa | 固/管/流 | 纯物理+多组织泛化 | MedIA | 🔄 Revision |
+| 2 | SPH-GNN 心脑血管 | 流体 | 血液+FSI | SPH+GNN血流动力学 | Nature BME | 📋 下一篇 |
+| 3 | 多组织耦合 | 全范围 | 固+管+流+骨 | 统一多组织手术仿真 | NMI/SciRob | 📋 规划 |
+| 4 | SE(3)骨力学 | 0.1→17 GPa | 骨 | SE(3)等变+各向异性 | NMI/JMPS | 📋 规划 |
 
-**三篇论文合计覆盖：1 kPa → 17 GPa = 7个数量级，固/管/流/骨全物态**
+**四篇论文构成完整的 MPWM (Medical Physical World Model) 体系：**
+- Paper 1 = 基础引擎（证明概念）
+- Paper 2 = 流体扩展（心脑血管）
+- Paper 3 = 系统集成（多组织手术数字孪生）
+- Paper 4 = 理论深度（SE(3)等变+各向异性）
+
+**总覆盖：1 kPa → 17 GPa = 7个数量级 × 固/管/流/骨 4种物态 × 各向同性→SE(3)等变**
 
 ---
 
