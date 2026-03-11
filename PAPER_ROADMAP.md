@@ -95,13 +95,68 @@
 | 3 | 多组织耦合 | 全范围 | 固+管+流+骨 | 统一多组织手术仿真 | NMI/SciRob | 📋 规划 |
 | 4 | SE(3)骨力学 | 0.1→17 GPa | 骨 | SE(3)等变+各向异性 | NMI/JMPS | 📋 规划 |
 
-**四篇论文构成完整的 MPWM (Medical Physical World Model) 体系：**
+### Paper 5: MPWM — Medical Physical World Model（初稿已有）
+- **标题**: "PhysDrive Med Gym: A Medical Physical World Model for Physics-Guided Surgical Robot Learning"
+- **目标期刊**: Nature Machine Intelligence
+- **当前状态**: 初稿已完成（DPC-GNN-RL项目），目前内容仅肝脏单组织
+- **GitHub**: `zhuangzard/DPC-GNN-RL` (private)
+- **核心贡献**:
+  - DPC-GNN 作为可微分物理引擎驱动 RL 策略学习
+  - 物理梯度直接传播到策略网络（DiffPPO）
+  - Medical Physical World Model 概念框架
+  - 安全约束：log-barrier 保证仿真物理合法性
+- **升级计划（用 Paper 1-4 成果丰富）**:
+  - [ ] 从肝脏单组织 → 多组织场景（Paper 1 + Paper 3 成果）
+  - [ ] 加入血流动力学约束（Paper 2 SPH-GNN）
+  - [ ] 骨-软组织接触场景（Paper 4 骨力学）
+  - [ ] 多组织手术全场景 RL 训练
+  - [ ] 与 NVIDIA Isaac Gym / MuJoCo 手术 RL 对比
+- **已有基础**:
+  - DiffPPO v12b: 0.304mm 最佳（但 curriculum collapse 问题未解）
+  - StdPPO baseline: success≈0.62-0.80, dist≈4.3mm
+  - 113+ tests, v0.1.1 已发布
+  - 8周救稿计划（NMI拒稿后重做）
+- **TODO**:
+  - [ ] 代码根本问题修复（pre-contact 梯度空洞）
+  - [ ] 3条 prototype 路线验证（Null-Medium / Contact-Gated / Hybrid Planner）
+  - [ ] 多 seed 完整实验（10-15 seeds + SAC/TD3 baseline）
+  - [ ] Curriculum Collapse 系统实验
+  - [ ] 多组织场景扩展
+  - [ ] 论文重写
+
+---
+
+## 📊 论文矩阵总览
+
+| # | 论文 | 刚度范围 | 物态 | 关键创新 | 期刊 | 状态 |
+|---|------|---------|------|---------|------|------|
+| 1 | DPC-GNN MedIA | 1kPa→500kPa | 固/管/流 | 纯物理+多组织泛化 | MedIA | 🔄 Revision |
+| 2 | SPH-GNN 心脑血管 | 流体 | 血液+FSI | SPH+GNN血流动力学 | Nature BME | 📋 下一篇 |
+| 3 | 多组织耦合 | 全范围 | 固+管+流+骨 | 统一多组织手术仿真 | NMI/SciRob | 📋 规划 |
+| 4 | SE(3)骨力学 | 0.1→17 GPa | 骨 | SE(3)等变+各向异性 | NMI/JMPS | 📋 规划 |
+| 5 | MPWM PhysDrive | 全范围 | 全物态+RL | 可微物理世界模型+手术RL | NMI | 🔄 重做中 |
+
+**五篇论文构成完整的 MPWM (Medical Physical World Model) 体系：**
+
+```
+Paper 1 (MedIA) ─── 基础引擎 ──→ 证明 DPC-GNN 概念
+    ↓
+Paper 2 (Nature BME) ── 流体扩展 ──→ 心脑血管
+    ↓                                    ↓
+Paper 3 (NMI/SciRob) ── 系统集成 ──→ 多组织手术数字孪生
+    ↓                                    ↓
+Paper 4 (NMI/JMPS) ── 理论深度 ──→ SE(3)等变骨力学
+    ↓                                    ↓
+Paper 5 (NMI) ═══ 终极整合 ═══→ MPWM：可微物理世界模型 + 手术RL
+```
+
 - Paper 1 = 基础引擎（证明概念）
 - Paper 2 = 流体扩展（心脑血管）
 - Paper 3 = 系统集成（多组织手术数字孪生）
 - Paper 4 = 理论深度（SE(3)等变+各向异性）
+- Paper 5 = 终极整合（MPWM = Paper 1-4 全部成果 + RL 手术学习）
 
-**总覆盖：1 kPa → 17 GPa = 7个数量级 × 固/管/流/骨 4种物态 × 各向同性→SE(3)等变**
+**总覆盖：1 kPa → 17 GPa = 7个数量级 × 固/管/流/骨 4种物态 × 各向同性→SE(3)等变 × 仿真→RL控制**
 
 ---
 
