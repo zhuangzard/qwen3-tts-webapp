@@ -79,6 +79,10 @@
 - 作者：庄太森（Taisen Zhuang）, Hao Liu
 - **待完成（V10→投稿）：** 太森自己替换图片（PyMuPDF提取）+ 多模型审稿（Gemini/Kimi/DeepSeek/Claude）
 
+### 技术报告标准模板（太森锁定，2026-03-11）
+- 6要素：背景动机(为什么+参数表+临床+文献) / 材料力学(公式+trap分析+预期行为) / 实验设计(配置+验证+FEM对照) / 训练状态 / 产出预测(贡献+叙事+风险) / 参考文献
+- 太森评价："写的比我说的全"，以后所有报告按此标准
+
 ### DPC-GNN 项目（核心论文项目）
 - **标题**: "DPC-GNN: Data-Free Physics-Constrained Graph Neural Network for Safe Dynamic Soft-Tissue Simulation"
 - **GitHub**: `zhuangzard/DPC-GNN` (private)
@@ -90,6 +94,10 @@
 - **关键架构**: hidden_dim=96, n_mp_layers=5（实际训练模型），论文ablation baseline是64/4
 - **已完成实验**: 超参数消融(L=4/D=64最优) / 材料鲁棒性(E±20%安全,14倍临床裕量) / FEM校准(纯物理=99.7%可达精度) / 网格分辨率(M400推荐) / 噪声鲁棒性(0-10%noise零衰退)
 - **MedIA专家评审**: 小修后录用，无需再次评审 🎉
+- **MuJoCo Flex 重大发现(2026-03-11)**: MuJoCo Flex用线性弹性非Neo-Hookean，位移误差+52%，J_min=-1.70翻转。必须换FEM做ground truth
+- **GNN/FEM ratio修正**: 0.13(vs MuJoCo)→约0.20(vs真实FEM)=改善54%；速度比从226×升级到33,000×
+- **审查结论**: 7个实验不受影响，2个需重跑(Fig3+Fig8)，1个需验证GT来源(Table 6)
+- **新小节**: revision加"游戏引擎vs高精度FEM"讨论（太森批准）
 - **核心定位**: 首个纯物理驱动动态GNN软组织仿真 + Medical Physical World Model + Data-Free
 - **禁用术语**: Phase A/B/C/D（改功能性描述）/ PIGNN命名 / "without data"（改为"without real-world paired supervision"）
 - **🔴 MedIA Revision 多组织扩展（2026-03-11启动）**:
@@ -136,6 +144,19 @@
 - 每个子项目双循环：写→专家验证→审核→记录→迭代（两轮走完才关闭）
 - 专家组必须包含GPT-5.4（核心科学判断，不只是最后润色）
 - 三丫 = 项目经理：拆解/分配/审核/验收/汇报，不亲自写code/跑测试
+
+### SPH-GNN 血液流体仿真（2026-03-11启动）
+- **定位**: 当前MedIA论文写但不重点展开；**下一篇论文重点深挖**心脑血管预测（中风/脑卒中/WSS/FFR）
+- **方案**: SPH粒子=GNN节点，SPH力天然F_ij=-F_ji=AntisymmetricMP
+- **代码**: 7个文件写入`blood-fluid/src/`，全部自测通过，304K参数
+- **训练**: Poiseuille 500ep + Womersley 200ep（铁蛋儿后台）
+- **下一篇论文建议标题**: "SPH-GNN: Data-Free Physics-Constrained GNN for Cardiovascular Hemodynamics"
+
+### 多组织验证（6份技术报告，2026-03-11）
+- Brain(E=1kPa,ν=0.49,D₁/C₁=165) / Kidney(10kPa,0.45) / Myocardium(30kPa,0.40) / Cartilage(500kPa,0.30) / Vessel(400kPa,0.49) / Blood(SPH)
+- 覆盖3个数量级刚度(1→500kPa)，ν从0.30→0.49
+- Brain初步结果: 静态phantom=0.026mm✅, 10步J_min=+0.407✅, 50步J_min=-12.045❌
+- 所有报告遵循6要素标准模板
 
 ### GNS Baseline (2026-03-01)
 - GNS单步0.127mm vs D 0.101mm (20%); rollout 43.97mm vs 0.74mm (**59.4×**)
